@@ -32,3 +32,7 @@ def setup_logging(level: int = logging.INFO) -> None:
     root = logging.getLogger()
     root.handlers = [handler]
     root.setLevel(level)
+
+
+# Shared application logger — attach request/job context via `extra={...}`.
+logger = logging.getLogger("sketchora")

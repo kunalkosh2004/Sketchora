@@ -31,6 +31,7 @@ PostgreSQL              Redis (jobs, cache)
 | Auth | JWT (PyJWT) + Argon2 (pwdlib) | stateless tokens, modern KDF |
 | Media | StorageProvider abstraction (Local / S3) | API never proxies large files |
 | AI | VisionProvider / ImageProvider / VideoProvider interfaces | never coupled to one vendor |
+| Vision | Gemini REST adapter (timeout, backoff, error classes) + deterministic Mock | offline dev and tests run without a key |
 | Container | Docker Compose (postgres, redis, backend, frontend) | one-command dev environment |
 
 ## API
@@ -71,9 +72,10 @@ IDs, latency and provider metrics. Secrets are never logged.
 ## Development phases
 
 1. ✅ Foundation (FastAPI, health, Docker)
-2. Auth + database (users, projects, ownership)
-3. Sketch upload (validation, storage abstraction)
-4. Gemini sketch analysis (provider abstraction)
+2. ✅ Auth + database (users, projects, ownership)
+3. ✅ Sketch upload (validation, storage abstraction)
+4. ✅ Gemini sketch analysis (VisionProvider abstraction, deterministic
+   hash-based analysis cache, idempotent analyze endpoint)
 5. Design editor (versioned specifications)
 6. Image generation (async jobs)
 7. Generation history + variations

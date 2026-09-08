@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import DateTime, ForeignKey, String
+from sqlalchemy import JSON, DateTime, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.types import Uuid
 
@@ -26,6 +26,8 @@ class Design(Base):
     status: Mapped[str] = mapped_column(String(32), default="draft", nullable=False)
     sketch_key: Mapped[str | None] = mapped_column(String(500))
     sketch_content_type: Mapped[str | None] = mapped_column(String(100))
+    spec: Mapped[dict | None] = mapped_column(JSON)
+    analyzed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=utcnow, nullable=False
     )
