@@ -32,8 +32,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
+    // Turbopack dev hashes next/font classes differently on the server and
+    // client; each side's CSS defines its own class, so this is cosmetic.
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} antialiased`}
     >
       <body className="min-h-dvh bg-paper font-sans text-ink">
