@@ -24,6 +24,8 @@ class Design(Base):
     )
     name: Mapped[str] = mapped_column(String(120), nullable=False)
     status: Mapped[str] = mapped_column(String(32), default="draft", nullable=False)
+    sketch_key: Mapped[str | None] = mapped_column(String(500))
+    sketch_content_type: Mapped[str | None] = mapped_column(String(100))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=utcnow, nullable=False
     )

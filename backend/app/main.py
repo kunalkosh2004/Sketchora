@@ -7,17 +7,20 @@ the product grows.
 """
 
 import logging
+import mimetypes
 import time
 import uuid
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 from app import __version__
 from app.api.v1.router import api_router
 from app.core.config import get_settings
 from app.core.logging import setup_logging
+from app.storage.factory import get_storage
 
 logger = logging.getLogger("sketchora")
 
@@ -70,6 +73,32 @@ def create_app() -> FastAPI:
             },
         )
         return response
+
+    @app.get("/media/{key:path}", tags=["system"])
+    def media(key: str) -> FileResponse:
+        """Serve locally-stored media.
+
+        Only meaningful for the local storage driver — S3 returns presigned
+        URLs, so media never proxies through the API server.
+        """
+        storage = get_storage()
+        if not hasattr(storage, "path"):
+            raise HTTPException(
+                status_code=status.HTTP_501_NOT_IMPLEMENTED,
+                detail="Media is served from object storage, not the API",
+            )
+        try:
+            path = storage.path(key)
+        except (ValueError, FileNotFoundError) as exc:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Media not found"
+            ) from exc
+        media_type = mimetypes.guess_type(key)[0] or "application/octet-stream"
+        return FileResponse(
+            path,
+            media_type=media_type,
+            headers={"Cache-Control": "public, max-age=31536000, immutable"},
+        )
 
     @app.get("/", include_in_schema=False)
     def root() -> dict:

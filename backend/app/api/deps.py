@@ -1,9 +1,12 @@
+import uuid
+
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
 from app.core.security import decode_access_token
+from app.models.project import Project
 from app.models.user import User
 
 _bearer = HTTPBearer(auto_error=False)
@@ -38,3 +41,17 @@ def get_current_user(
             headers={"WWW-Authenticate": "Bearer"},
         )
     return user
+
+
+def get_owned_project(project_id: uuid.UUID, user: User, db: Session) -> Project:
+    """Fetch a project the user owns.
+
+    Other users' projects and missing projects both return 404, so project
+    existence is never leaked across accounts.
+    """
+    project = db.get(Project, project_id)
+    if project is None or project.owner_id != user.id:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Project not found"
+        )
+    return project

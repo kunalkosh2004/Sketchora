@@ -1,0 +1,1 @@
+"""Object storage abstraction — the API never hard-depends on where media lives."""

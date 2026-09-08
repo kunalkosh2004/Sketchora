@@ -12,7 +12,7 @@ editable variations, and animated fashion visuals using multimodal AI.
 | Frontend foundation — landing page + design system | ✅ committed |
 | Dashboard — project grid, new-design flow, ⌘K, mobile nav | ✅ committed |
 | Studio workspace — analysis/spec/visualize/variations/animate, viewer, versions | ✅ committed |
-| Backend (FastAPI, PostgreSQL, auth) | ⏳ next |
+| Backend foundation + auth + database (FastAPI, PostgreSQL, JWT) | ✅ committed |
 | AI pipeline (analysis, generation, animation) | pending |
 
 See `frontend/DESIGN_SYSTEM.md` for the design system that all screens follow,

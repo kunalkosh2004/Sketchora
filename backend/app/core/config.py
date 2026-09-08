@@ -34,6 +34,9 @@ class Settings(BaseSettings):
 
     storage_driver: str = "local"
     storage_dir: str = "./var/storage"
+    s3_bucket: str | None = None
+    s3_region: str | None = None
+    upload_max_bytes: int = 10 * 1024 * 1024  # 10 MB
 
     # AI providers — optional until the AI phases land.
     google_api_key: str | None = None
