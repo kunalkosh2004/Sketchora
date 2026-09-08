@@ -4,33 +4,61 @@
  * SketchIllustration for the hero comparison slider.
  */
 
+type Backdrop = "warm" | "cool" | "mauve" | "sand";
+
+const BACKDROPS: Record<
+  Backdrop,
+  { stops: [string, string, string]; light: string }
+> = {
+  warm: {
+    stops: ["#f2ece1", "#eae2d3", "#ddd2be"],
+    light: "#fffdf7",
+  },
+  cool: {
+    stops: ["#eef1ea", "#e2e7db", "#d2d9ca"],
+    light: "#fdfef9",
+  },
+  mauve: {
+    stops: ["#f1ecea", "#e6dfdd", "#d7cbca"],
+    light: "#fdfbf9",
+  },
+  sand: {
+    stops: ["#f4efe2", "#ebe2cf", "#dccdb4"],
+    light: "#fffcf3",
+  },
+};
+
 type Props = {
   className?: string;
   /** Rotate the dress hue (used for variation thumbnails). */
   dressHue?: number;
+  /** Studio backdrop tone. */
+  backdrop?: Backdrop;
 };
 
 export function VisualizationIllustration({
   className,
   dressHue = 0,
+  backdrop = "warm",
 }: Props) {
+  const bg = BACKDROPS[backdrop];
   return (
     <svg
       viewBox="0 0 800 1000"
       className={className}
       role="img"
-      aria-label="Realistic AI visualization of an evening gown in deep green satin"
+      aria-label="Realistic AI visualization of an evening gown"
       preserveAspectRatio="xMidYMid meet"
     >
       <defs>
-        <linearGradient id="viz-bg" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#f2ece1" />
-          <stop offset="55%" stopColor="#eae2d3" />
-          <stop offset="100%" stopColor="#ddd2be" />
+        <linearGradient id={`viz-bg-${backdrop}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={bg.stops[0]} />
+          <stop offset="55%" stopColor={bg.stops[1]} />
+          <stop offset="100%" stopColor={bg.stops[2]} />
         </linearGradient>
-        <radialGradient id="viz-light" cx="50%" cy="30%" r="65%">
-          <stop offset="0%" stopColor="#fffdf7" stopOpacity="0.55" />
-          <stop offset="100%" stopColor="#fffdf7" stopOpacity="0" />
+        <radialGradient id={`viz-light-${backdrop}`} cx="50%" cy="30%" r="65%">
+          <stop offset="0%" stopColor={bg.light} stopOpacity="0.55" />
+          <stop offset="100%" stopColor={bg.light} stopOpacity="0" />
         </radialGradient>
         <radialGradient id="viz-vignette" cx="50%" cy="46%" r="72%">
           <stop offset="62%" stopColor="rgba(40,30,20,0)" />
@@ -57,8 +85,8 @@ export function VisualizationIllustration({
       </defs>
 
       {/* Studio backdrop */}
-      <rect width="800" height="1000" fill="url(#viz-bg)" />
-      <rect width="800" height="1000" fill="url(#viz-light)" />
+      <rect width="800" height="1000" fill={`url(#viz-bg-${backdrop})`} />
+      <rect width="800" height="1000" fill={`url(#viz-light-${backdrop})`} />
 
       {/* Body — head, neck, shoulders behind the garment */}
       <g opacity="0.5" fill="#2a241d">

@@ -83,11 +83,21 @@ falls back to `prefers-color-scheme`. `ThemeToggle` persists the choice.
 src/components/
 ├── ui/        Button, Logo, Reveal, ThemeToggle — design-system primitives
 ├── artwork/   SketchIllustration, VisualizationIllustration (SVG, no assets)
-└── landing/   Nav, Hero, CompareSlider, HowItWorks, Features, Workflow, Cta, Footer
+├── landing/   Nav, Hero, CompareSlider, HowItWorks, Features, Workflow, Cta, Footer
+└── dashboard/ Nav, ProjectsGrid, ProjectCard, NewDesignDialog, CommandMenu,
+               ProfileSheet, BottomNav, DashboardShell
 ```
 
-Future screens (dashboard, studio, editor) add their own folders and consume
-`ui/` primitives. No page is a giant component.
+Future screens (studio, editor) add their own folders and consume `ui/`
+primitives. No page is a giant component.
+
+## Data
+
+The dashboard consumes a typed project model in `src/lib/projects.ts`
+(statuses: sketched / generating / completed / failed). The current source is
+seed data shaped to mirror the future API — swap the source in
+`DashboardShell` when the backend lands. Demo states are reachable via
+`/dashboard?state=empty` and `/dashboard?state=loading`.
 
 ## Artwork
 
@@ -108,5 +118,6 @@ aligns. No external image assets — nothing to license, load, or break.
 - `npm run lint` (ESLint, react-hooks rules)
 - `npm run build` (type-check + production build)
 - Responsive verification: Playwright against system Chrome at 1440 / 768 /
-  390 / 320 px — horizontal-overflow checks, interaction tests, dark mode.
-  Screenshots land in `frontend/screenshots/` (gitignored).
+  390 / 320 px — horizontal-overflow checks, interaction tests (compare
+  slider, search, ⌘K menu, new-design flow, dark mode). Screenshots land in
+  `frontend/screenshots/` (gitignored).

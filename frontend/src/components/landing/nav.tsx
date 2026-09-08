@@ -11,7 +11,7 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 const LINKS = [
   { href: "#how-it-works", label: "How it works" },
   { href: "#features", label: "Features" },
-  { href: "/studio", label: "Studio" },
+  { href: "/dashboard", label: "Dashboard" },
 ];
 
 export function Nav() {

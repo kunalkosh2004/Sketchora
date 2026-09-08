@@ -10,8 +10,8 @@ editable variations, and animated fashion visuals using multimodal AI.
 | Phase | State |
 | --- | --- |
 | Frontend foundation — landing page + design system | ✅ committed |
-| Dashboard | ⏳ next |
-| Studio / design workspace | pending |
+| Dashboard — project grid, new-design flow, ⌘K, mobile nav | ✅ committed |
+| Studio / design workspace | ⏳ next |
 | Backend (FastAPI, PostgreSQL, auth) | pending |
 | AI pipeline (analysis, generation, animation) | pending |
 
@@ -29,4 +29,5 @@ follow, and `frontend/README.md` for frontend commands.
 
 Modular monolith, developed in committed phases: frontend first, then FastAPI
 backend, PostgreSQL, AI provider abstraction, asynchronous job system, and
-media pipeline. No fake implementations ahead of their phase.
+media pipeline. No fake implementations ahead of their phase — the dashboard's
+project data is typed seed data shaped to mirror the future API.

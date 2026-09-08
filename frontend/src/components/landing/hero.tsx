@@ -47,7 +47,7 @@ export function Hero() {
 
           <Reveal delay={0.24}>
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <ButtonLink href="/studio" size="lg" className="w-full sm:w-auto">
+              <ButtonLink href="/dashboard" size="lg" className="w-full sm:w-auto">
                 Start designing
               </ButtonLink>
               <ButtonLink

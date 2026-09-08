@@ -3,7 +3,7 @@ import { Logo } from "@/components/ui/logo";
 const LINKS = [
   { href: "#how-it-works", label: "How it works" },
   { href: "#features", label: "Features" },
-  { href: "/studio", label: "Studio" },
+  { href: "/dashboard", label: "Dashboard" },
 ];
 
 export function Footer() {
