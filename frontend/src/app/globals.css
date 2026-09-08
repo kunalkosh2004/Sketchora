@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Sketchora design system
+   Light mode is the default. Dark mode ("premium fashion studio at night")
+   is enabled by adding .dark to <html> (class strategy, no FOUC script in
+   layout.tsx keeps it in sync with the user's preference / stored choice).
+--------------------------------------------------------------------------- */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---- Design tokens ------------------------------------------------------ */
+
+@theme {
+  /* Color — light (warm paper / soft black / charcoal) */
+  --color-paper: #faf7f2; /* page background — warm off-white */
+  --color-surface: #fffdfa; /* raised surfaces */
+  --color-ink: #1c1915; /* primary text — soft black */
+  --color-ink-soft: #524b42; /* secondary text */
+  --color-muted: #8b8377; /* tertiary text */
+  --color-line: #e8e2d7; /* hairline borders */
+  --color-line-strong: #d9d2c4;
+
+  /* Accent — used sparingly, never as a wash */
+  --color-accent: #7d3328; /* oxblood */
+  --color-accent-deep: #64261d;
+  --color-accent-soft: #f4e9e3;
+
+  /* Type */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-display: var(--font-instrument-serif), "Georgia", "Times New Roman",
+    serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular",
+    monospace;
+
+  /* Radius — Apple-like subtle geometry */
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-3xl: 28px;
+  --radius-4xl: 32px;
+
+  /* Shadows — materials floating slightly, never blurry */
+  --shadow-soft: 0 1px 2px rgb(28 25 21 / 0.04), 0 8px 24px rgb(28 25 21 / 0.05);
+  --shadow-lift: 0 2px 4px rgb(28 25 21 / 0.04), 0 16px 48px rgb(28 25 21 / 0.09);
+  --shadow-overlay: 0 24px 80px rgb(28 25 21 / 0.18);
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Dark mode — deep charcoal, warm, low contrast, image-forward */
+.dark {
+  --color-paper: #16130e;
+  --color-surface: #1f1b14;
+  --color-ink: #ece7dd;
+  --color-ink-soft: #b3ab9d;
+  --color-muted: #8a8274;
+  --color-line: #2b2620;
+  --color-line-strong: #3a342b;
+
+  --color-accent: #c0634f;
+  --color-accent-deep: #d17a66;
+  --color-accent-soft: #33221d;
+
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px rgb(0 0 0 / 0.25);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.4), 0 16px 48px rgb(0 0 0 / 0.4);
+  --shadow-overlay: 0 24px 80px rgb(0 0 0 / 0.6);
+
+  color-scheme: dark;
+}
+
+/* ---- Base --------------------------------------------------------------- */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-paper);
+  }
+
+  /* Keyboard focus — visible everywhere, invisible to pointer users */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ---- Editorial helpers -------------------------------------------------- */
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+@utility hairline-t {
+  border-top: 1px solid var(--color-line);
+}
+
+@utility hairline-b {
+  border-bottom: 1px solid var(--color-line);
+}
