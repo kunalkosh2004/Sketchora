@@ -3,8 +3,8 @@
 The Sketchora frontend: a premium, editorial UI for turning hand-drawn fashion
 sketches into realistic AI visualizations.
 
-**Current state:** landing page + design system (complete). Dashboard, studio,
-and editor come next.
+**Current state:** landing page, design system, dashboard, and studio workspace
+(complete). Backend and AI pipeline come next.
 
 ## Stack
 
@@ -36,10 +36,12 @@ consume these tokens and primitives (`src/components/ui/`).
 
 ```
 src/
-├── app/            routes (/, /studio) · globals.css (tokens)
+├── app/            routes (/, /dashboard, /studio, /studio/[id]) · globals.css
 ├── components/
-│   ├── ui/         primitives — Button, Logo, Reveal, ThemeToggle
+│   ├── ui/         primitives — Button, Logo, Reveal, Tip, CommandMenu, ThemeToggle
 │   ├── artwork/    SketchIllustration, VisualizationIllustration (SVG)
-│   └── landing/    landing page sections
-└── lib/            utils
+│   ├── landing/    landing page sections
+│   ├── dashboard/  project grid, new-design flow, mobile nav
+│   └── studio/     workspace shell, canvas, inspectors
+└── lib/            projects + studio data models, utils
 ```

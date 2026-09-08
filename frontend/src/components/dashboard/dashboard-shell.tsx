@@ -8,7 +8,7 @@ import { DashboardNav } from "@/components/dashboard/dashboard-nav";
 import { ProjectsGrid } from "@/components/dashboard/projects-grid";
 import { NewDesignDialog } from "@/components/dashboard/new-design-dialog";
 import { ProfileSheet } from "@/components/dashboard/profile-sheet";
-import { CommandMenu } from "@/components/dashboard/command-menu";
+import { DashboardCommandMenu } from "@/components/dashboard/command-menu";
 import { BottomNav } from "@/components/dashboard/bottom-nav";
 import { SearchInput, type SearchHandle } from "@/components/dashboard/search-input";
 import { filterProjects, seedProjects } from "@/lib/projects";
@@ -140,7 +140,7 @@ export function DashboardShell() {
             <ProfileSheet onClose={() => setProfileOpen(false)} />
           )}
         </AnimatePresence>
-        <CommandMenu
+        <DashboardCommandMenu
           onNewDesign={() => setNewDesignOpen(true)}
           onFocusSearch={focusSearch}
         />

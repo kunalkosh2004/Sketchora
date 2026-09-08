@@ -4,6 +4,8 @@
  * SketchIllustration for the hero comparison slider.
  */
 
+import type { Ref } from "react";
+
 type Backdrop = "warm" | "cool" | "mauve" | "sand";
 
 const BACKDROPS: Record<
@@ -34,16 +36,20 @@ type Props = {
   dressHue?: number;
   /** Studio backdrop tone. */
   backdrop?: Backdrop;
+  /** React 19 ref — forwarded to the <svg> element. */
+  ref?: Ref<SVGSVGElement>;
 };
 
 export function VisualizationIllustration({
   className,
   dressHue = 0,
   backdrop = "warm",
+  ref,
 }: Props) {
   const bg = BACKDROPS[backdrop];
   return (
     <svg
+      ref={ref}
       viewBox="0 0 800 1000"
       className={className}
       role="img"

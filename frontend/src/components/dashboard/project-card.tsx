@@ -36,7 +36,7 @@ function MetaLine({ project }: { project: Project }) {
 export function ProjectCard({ project }: { project: Project }) {
   return (
     <a
-      href="/studio"
+      href={`/studio/${project.id}`}
       className="group block overflow-hidden rounded-xl border border-line bg-surface shadow-soft transition-all duration-300 ease-out-soft hover:-translate-y-1 hover:shadow-lift"
       aria-label={`${project.name} — ${projectStatusLabel[project.status]}`}
     >

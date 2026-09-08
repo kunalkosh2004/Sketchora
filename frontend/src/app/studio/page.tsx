@@ -1,37 +1,47 @@
-"use client";
-
-import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
-import { DashboardNav } from "@/components/dashboard/dashboard-nav";
+import { Logo } from "@/components/ui/logo";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { ProjectCard } from "@/components/dashboard/project-card";
+import { seedProjects } from "@/lib/projects";
+
+export const metadata: Metadata = {
+  title: "Studio — Sketchora",
+  description: "Open a design in the Sketchora workspace.",
+};
 
 export default function Studio() {
   return (
     <main className="min-h-dvh">
-      <DashboardNav
-        query=""
-        onQueryChange={() => {}}
-        onOpenProfile={() => {}}
-      />
-      <section className="flex min-h-[80dvh] items-center justify-center px-5 pt-16">
-        <div className="mx-auto max-w-md text-center">
-          <div className="mx-auto grid size-14 place-items-center rounded-2xl bg-ink text-paper shadow-soft">
-            <span className="font-display text-3xl">S</span>
+      <header className="border-b border-line bg-paper/85 backdrop-blur-xl">
+        <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-5 md:px-8">
+          <div className="flex items-center gap-4">
+            <a
+              href="/dashboard"
+              aria-label="Back to studio"
+              className="grid size-9 place-items-center rounded-md text-ink-soft transition-colors hover:bg-ink/[0.06] hover:text-ink"
+            >
+              <ArrowLeft className="size-[18px]" />
+            </a>
+            <span className="h-5 w-px bg-line" aria-hidden="true" />
+            <Logo />
           </div>
-          <h1 className="mt-8 font-display text-4xl tracking-[-0.01em] text-ink">
-            The workspace is next.
-          </h1>
-          <p className="mt-4 text-[15.5px] leading-relaxed text-ink-soft">
-            Your dashboard is live. Next we&apos;re building the design
-            workspace — sketch analysis, specifications, and visualization —
-            which will live here.
-          </p>
-          <Link
-            href="/dashboard"
-            className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink"
-          >
-            <ArrowLeft className="size-4" />
-            Back to your studio
-          </Link>
+          <ThemeToggle />
+        </div>
+      </header>
+
+      <section className="mx-auto max-w-[1200px] px-5 py-14 md:px-8 md:py-20">
+        <h1 className="font-display text-4xl tracking-[-0.015em] text-ink md:text-5xl">
+          Choose a design.
+        </h1>
+        <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-soft">
+          Open a project to work through the sketch-to-visualization flow.
+        </p>
+
+        <div id="studio-cards" className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-5 lg:grid-cols-4">
+          {seedProjects.map((p) => (
+            <ProjectCard key={p.id} project={p} />
+          ))}
         </div>
       </section>
     </main>

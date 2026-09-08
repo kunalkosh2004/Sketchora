@@ -84,20 +84,25 @@ src/components/
 ├── ui/        Button, Logo, Reveal, ThemeToggle — design-system primitives
 ├── artwork/   SketchIllustration, VisualizationIllustration (SVG, no assets)
 ├── landing/   Nav, Hero, CompareSlider, HowItWorks, Features, Workflow, Cta, Footer
-└── dashboard/ Nav, ProjectsGrid, ProjectCard, NewDesignDialog, CommandMenu,
-               ProfileSheet, BottomNav, DashboardShell
+├── dashboard/ Nav, ProjectsGrid, ProjectCard, NewDesignDialog, ProfileSheet,
+               BottomNav, DashboardShell
+└── studio/    StudioShell, StudioTopbar, StageRail, StudioCanvas, Inspector,
+               ProgressOverlay, Toast
 ```
 
-Future screens (studio, editor) add their own folders and consume `ui/`
-primitives. No page is a giant component.
+All screens consume `ui/` primitives (`Button`, `CommandMenu`, `Tip`,
+`Reveal`, `ThemeToggle`). No page is a giant component.
 
 ## Data
 
-The dashboard consumes a typed project model in `src/lib/projects.ts`
-(statuses: sketched / generating / completed / failed). The current source is
-seed data shaped to mirror the future API — swap the source in
-`DashboardShell` when the backend lands. Demo states are reachable via
-`/dashboard?state=empty` and `/dashboard?state=loading`.
+The dashboard and studio consume a typed project model in `src/lib/projects.ts`
+(statuses: sketched / generating / completed / failed) and a workspace model in
+`src/lib/studio.ts` (stages, spec options, versions, variations). The current
+source is seed data shaped to mirror the future API — swap the source in
+`DashboardShell` / `StudioShell` when the backend lands. Demo states:
+`/dashboard?state=empty` and `/dashboard?state=loading`. Analysis, generation,
+and animation run as timed UI state demos in `StudioShell` until the backend
+phases land — each is marked in code.
 
 ## Artwork
 
@@ -118,6 +123,7 @@ aligns. No external image assets — nothing to license, load, or break.
 - `npm run lint` (ESLint, react-hooks rules)
 - `npm run build` (type-check + production build)
 - Responsive verification: Playwright against system Chrome at 1440 / 768 /
-  390 / 320 px — horizontal-overflow checks, interaction tests (compare
-  slider, search, ⌘K menu, new-design flow, dark mode). Screenshots land in
+  390 / 320 px — horizontal-overflow checks and interaction tests for every
+  screen (compare slider, search, ⌘K, new-design flow, studio analysis/
+  generation/variations/animate flows, dark mode). Screenshots land in
   `frontend/screenshots/` (gitignored).
