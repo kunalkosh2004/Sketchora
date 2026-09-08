@@ -1,0 +1,54 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    # No host port published: services reach postgres over the compose
+    # network, avoiding conflicts with local databases. (For host tooling,
+    # forward a port temporarily: `docker compose port postgres 5432`.)
+    environment:
+      POSTGRES_USER: sketchora
+      POSTGRES_PASSWORD: sketchora
+      POSTGRES_DB: sketchora
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sketchora"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://sketchora:sketchora@postgres:5432/sketchora
+      REDIS_URL: redis://redis:6379/0
+      JWT_SECRET: ${JWT_SECRET:-dev-secret-change-me}
+      CORS_ORIGINS: '["http://localhost:3000"]'
+      STORAGE_DIR: /data/storage
+    volumes:
+      - mediadata:/data/storage
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+  mediadata:
